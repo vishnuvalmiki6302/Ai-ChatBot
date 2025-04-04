@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Essentials Chatbot</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      height: 100vh;
+      width: 100%;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 40px;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 32px;
+      font-weight: 700;
+      background: linear-gradient(45deg, #00ffe7, #7a00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: #b0b3ff;
+      margin-bottom: 20px;
+    }
+
+    .chat-container {
+      width: 90%;
+      max-width: 700px;
+      height: 60vh;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .chat-box {
+      display: flex;
+    }
+
+    .chat-bubble {
+      padding: 14px 20px;
+      border-radius: 20px;
+      font-size: 15px;
+      max-width: 75%;
+      word-wrap: break-word;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .user-chat {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      color: #000;
+    }
+
+    .ai-chat {
+      align-self: flex-start;
+      background: linear-gradient(135deg, #8e2de2, #4a00e0);
+      color: #fff;
+    }
+
+    .prompt-area {
+      margin-top: 20px;
+      display: flex;
+      width: 90%;
+      max-width: 700px;
+      gap: 10px;
+    }
+
+    .prompt-area input {
+      flex-grow: 1;
+      padding: 14px 18px;
+      border: none;
+      border-radius: 30px;
+      font-size: 15px;
+      outline: none;
+      background: #1a1a2e;
+      color: #fff;
+    }
+
+    .prompt-area input::placeholder {
+      color: #ccc;
+    }
+
+    .prompt-area button {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      color: #000;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .prompt-area button:hover {
+      transform: scale(1.1);
+    }
+
+    .footer, .registration {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    .registration {
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="title">AI ChatBot</div>
+  <div class="subtitle">Crafted by Vishnu, Nandha & Athar</div>
+
+  <div class="chat-container"></div>
+
+  <div class="prompt-area">
+    <input type="text" id="prompt" placeholder="Type your message here..." />
+    <button id="submit">&#9658;</button>
+  </div>
+
+  <div class="footer">&copy; 2025 AI Essentials</div>
+  <div class="registration">
+    Vishnu - Reg: 12310800 - Roll: 63 |
+    Nandha - Reg: 12301690 - Roll: 17 |
+    Athar - Reg: 12309869 - Roll: 53
+  </div>
+
+  <script>
+    const promptInput = document.querySelector("#prompt");
+    const submitBtn = document.querySelector("#submit");
+    const chatContainer = document.querySelector(".chat-container");
+
+    const Api_Url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyBJvhPW1ZSldEsWcGoNwgN4LuarfBPtnXY";
+
+    async function generateResponse(userMessage) {
+      const aiChatBox = document.createElement("div");
+      aiChatBox.classList.add("chat-box");
+
+      const aiBubble = document.createElement("div");
+      aiBubble.classList.add("chat-bubble", "ai-chat");
+      aiBubble.textContent = "Thinking...";
+      aiChatBox.appendChild(aiBubble);
+      chatContainer.appendChild(aiChatBox);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      try {
+        const response = await fetch(Api_Url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ contents: [{ parts: [{ text: userMessage }] }] }),
+        });
+        const data = await response.json();
+        aiBubble.textContent =
+          data.candidates[0].content.parts[0].text.replace(/\\(.?)\\*/g, "$1").trim();
+      } catch (error) {
+        aiBubble.textContent = "Something went wrong. Please try again.";
+      }
+
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function handleUserMessage() {
+      const userMessage = promptInput.value.trim();
+      if (!userMessage) return;
+
+      const userChatBox = document.createElement("div");
+      userChatBox.classList.add("chat-box");
+
+      const userBubble = document.createElement("div");
+      userBubble.classList.add("chat-bubble", "user-chat");
+      userBubble.textContent = userMessage;
+
+      userChatBox.appendChild(userBubble);
+      chatContainer.appendChild(userChatBox);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      promptInput.value = "";
+      generateResponse(userMessage);
+    }
+
+    promptInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") handleUserMessage();
+    });
+
+    submitBtn.addEventListener("click", handleUserMessage);
+    const port = process.env.PORT || 4000;
+  </script>
+</body>
+</html>
