@@ -14,16 +14,128 @@
 
     body {
       background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      height: 100vh;
-      width: 100%;
+      min-height: 100vh;
       color: #e0e0e0;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding-top: 40px;
-      text-align: center;
+    }
 
+    /* Sidebar styling */
+    .sidebar {
+      width: 280px;
+      background: rgba(15, 12, 41, 0.9);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      padding: 20px;
+      overflow-y: auto;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(74, 0, 224, 0.3);
+    }
+
+    .logo {
+  width: 50px;
+  height: 50px;
+  background-image: url('https://img.freepik.com/premium-vector/vna-logo-design-initial-letter-vna-monogram-logo-using-hexagon-shape_1101554-54793.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  /* Invert colors (black becomes white) and remove white background */
+  filter: invert(1) brightness(1.5);
+  /* Blend with background */
+  mix-blend-mode: lighten;
+  margin-right: 10px;
+}
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 700;
+      background: linear-gradient(45deg, #00ffe7, #7a00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Rest of your CSS remains the same */
+    .sidebar-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #00ffe7;
+      padding-bottom: 10px;
+    }
+
+    .sidebar-section {
+      margin-bottom: 25px;
+    }
+
+    .sidebar-section h3 {
+      font-size: 15px;
+      color: #b0b3ff;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .sidebar-section h3::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: #4facfe;
+      border-radius: 50%;
+    }
+
+    .sidebar-section p {
+      font-size: 13px;
+      text-align: left;
+      margin-bottom: 10px;
+      line-height: 1.5;
+      color: rgba(224, 224, 224, 0.8);
+    }
+
+    .sidebar-features {
+      list-style-type: none;
+    }
+
+    .sidebar-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      padding: 6px 0;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+    }
+
+    .sidebar-features li::before {
+      content: "→";
+      color: #00f2fe;
+      font-size: 12px;
+    }
+
+    /* Main content area */
+    .main-content {
+      margin-left: 280px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 40px 40px 20px;
+      max-width: calc(100% - 280px);
     }
 
     .title {
@@ -33,27 +145,33 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 6px;
+      text-align: center;
     }
 
     .subtitle {
-      font-size: 15px;
+      font-size: 14px;
       color: #b0b3ff;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+      letter-spacing: 0.5px;
     }
 
     .chat-container {
-      width: 90%;
-      max-width: 700px;
-      height: 60vh;
+      width: 100%;
+      flex: 1;
+      min-height: 400px;
+      max-height: 60vh;
       background: rgba(255, 255, 255, 0.06);
       backdrop-filter: blur(12px);
-      border-radius: 20px;
+      border-radius: 15px;
       padding: 20px;
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
       overflow-y: auto;
       display: flex;
       flex-direction: column;
       gap: 15px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .chat-box {
@@ -61,12 +179,13 @@
     }
 
     .chat-bubble {
-      padding: 14px 20px;
-      border-radius: 20px;
-      font-size: 15px;
+      padding: 12px 18px;
+      border-radius: 18px;
+      font-size: 14px;
       max-width: 75%;
       word-wrap: break-word;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      line-height: 1.5;
     }
 
     .user-chat {
@@ -81,27 +200,39 @@
       color: #fff;
     }
 
+    .input-area {
+      width: 100%;
+    }
+
     .prompt-area {
-      margin-top: 20px;
       display: flex;
-      width: 90%;
-      max-width: 700px;
-      gap: 10px;
+      width: 100%;
+      gap: 12px;
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .prompt-area input {
       flex-grow: 1;
-      padding: 14px 18px;
+      padding: 14px 20px;
       border: none;
       border-radius: 30px;
-      font-size: 15px;
+      font-size: 14px;
       outline: none;
-      background: #1a1a2e;
+      background: rgba(26, 26, 46, 0.8);
       color: #fff;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .prompt-area input:focus {
+      border-color: #4facfe;
+      box-shadow: 0 0 0 2px rgba(79, 172, 254, 0.2);
     }
 
     .prompt-area input::placeholder {
-      color: #ccc;
+      color: rgba(204, 204, 204, 0.7);
     }
 
     .prompt-area button {
@@ -114,40 +245,114 @@
       font-size: 20px;
       font-weight: bold;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
     }
 
     .prompt-area button:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
     }
 
-    .footer, .registration {
-      margin-top: 10px;
+    .footer-container {
+      width: 100%;
+      text-align: center;
+      margin-top: auto;
+      padding-top: 20px;
+    }
+
+    .footer {
       font-size: 12px;
-      color: #aaa;
+      color: rgba(170, 170, 170, 0.7);
+      margin-bottom: 5px;
     }
 
     .registration {
-      color: #888;
+      font-size: 11px;
+      color: rgba(136, 136, 136, 0.7);
+      letter-spacing: 0.3px;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 900px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      
+      .main-content {
+        margin-left: 0;
+        max-width: 100%;
+        padding: 25px 20px;
+      }
+      
+      .chat-container {
+        max-height: 55vh;
+      }
+      
+      .logo-container {
+        justify-content: center;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="title">AI ChatBot</div>
-  <div class="subtitle">Created by Vishnu, Nandha & Athar</div>
-
-  <div class="chat-container"></div>
-
-  <div class="prompt-area">
-    <input type="text" id="prompt" placeholder="Type your message here..." />
-    <button id="submit">&#9658;</button>
+  <div class="sidebar">
+    <div class="logo-container">
+      <div class="logo"></div>
+      <div class="logo-text">VNA AI</div>
+    </div>
+    
+    <div class="sidebar-section">
+      <h3>About This Project</h3>
+      <p>Advanced AI chatbot powered by Google's Gemini model, providing intelligent, real-time responses to user queries.</p>
+    </div>
+    
+    <div class="sidebar-section">
+      <h3>Key Features</h3>
+      <ul class="sidebar-features">
+        <li>Natural language processing</li>
+        <li>Context-aware responses</li>
+        <li>Secure encrypted communication</li>
+        <li>Responsive cross-platform design</li>
+        <li>Modern conversational UI</li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-section">
+      <h3>Development Team</h3>
+      <p><strong>Vishnu</strong> - AI Integration</p>
+      <p><strong>Nandha</strong> - Backend Development</p>
+      <p><strong>Athar</strong> - UI/UX Design</p>
+    </div>
   </div>
+  
+  <div class="main-content">
+    <div class="title">AI Chat Assistant</div>
+    <div class="subtitle">Powered by Gemini AI Technology</div>
 
-  <div class="footer">&copy; 2025 AI Essentials</div>
-  <div class="registration">
-    Vishnu - Reg: 12310800 - Roll: 63 |
-    Nandha - Reg: 12301690 - Roll: 17 |
-    Athar - Reg: 12309869 - Roll: 53
+    <div class="chat-container"></div>
+
+    <div class="input-area">
+      <div class="prompt-area">
+        <input type="text" id="prompt" placeholder="Ask me anything..." />
+        <button id="submit">→</button>
+      </div>
+    </div>
+
+    <div class="footer-container">
+      <div class="footer">&copy; 2025 VNA AI Technologies</div>
+      <div class="registration">
+        Vishnu (12310800) | Nandha (12301690) | Athar (12309869)
+      </div>
+    </div>
   </div>
 
   <script>
@@ -208,7 +413,6 @@
     });
 
     submitBtn.addEventListener("click", handleUserMessage);
-    const port = process.env.PORT || 4000;
   </script>
 </body>
 </html>
