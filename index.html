@@ -45,18 +45,16 @@
     }
 
     .logo {
-  width: 50px;
-  height: 50px;
-  background-image: url('https://img.freepik.com/premium-vector/vna-logo-design-initial-letter-vna-monogram-logo-using-hexagon-shape_1101554-54793.jpg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  /* Invert colors (black becomes white) and remove white background */
-  filter: invert(1) brightness(1.5);
-  /* Blend with background */
-  mix-blend-mode: lighten;
-  margin-right: 10px;
-}
+      width: 50px;
+      height: 50px;
+      background-image: url('https://img.freepik.com/premium-vector/vna-logo-design-initial-letter-vna-monogram-logo-using-hexagon-shape_1101554-54793.jpg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      filter: invert(1) brightness(1.5);
+      mix-blend-mode: lighten;
+      margin-right: 10px;
+    }
 
     .logo-text {
       font-size: 22px;
@@ -64,15 +62,6 @@
       background: linear-gradient(45deg, #00ffe7, #7a00ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-    }
-
-    /* Rest of your CSS remains the same */
-    .sidebar-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 20px;
-      color: #00ffe7;
-      padding-bottom: 10px;
     }
 
     .sidebar-section {
@@ -156,6 +145,7 @@
       letter-spacing: 0.5px;
     }
 
+    /* Chat container */
     .chat-container {
       width: 100%;
       flex: 1;
@@ -174,32 +164,128 @@
       border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .chat-box {
-      display: flex;
-    }
-
-    .chat-bubble {
-      padding: 12px 18px;
+    .message {
+      max-width: 70%;
+      padding: 12px 16px;
       border-radius: 18px;
       font-size: 14px;
-      max-width: 75%;
-      word-wrap: break-word;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       line-height: 1.5;
+      position: relative;
     }
 
-    .user-chat {
+    .user-message {
       align-self: flex-end;
       background: linear-gradient(135deg, #00f2fe, #4facfe);
       color: #000;
+      border-bottom-right-radius: 4px;
+      margin-left: 30%;
     }
 
-    .ai-chat {
+    .ai-message {
       align-self: flex-start;
       background: linear-gradient(135deg, #8e2de2, #4a00e0);
       color: #fff;
+      border-bottom-left-radius: 4px;
+      margin-right: 30%;
     }
 
+    /* Message tails */
+    .user-message::after {
+      content: "";
+      position: absolute;
+      right: -8px;
+      top: 0;
+      width: 0;
+      height: 0;
+      border-left: 8px solid #4facfe;
+      border-top: 8px solid transparent;
+    }
+
+    .ai-message::after {
+      content: "";
+      position: absolute;
+      left: -8px;
+      top: 0;
+      width: 0;
+      height: 0;
+      border-right: 8px solid #4a00e0;
+      border-top: 8px solid transparent;
+    }
+
+    /* Thinking animation */
+    .typing-indicator {
+      display: flex;
+      gap: 6px;
+      padding: 8px 0;
+    }
+    
+    .typing-dot {
+      width: 8px;
+      height: 8px;
+      background: #b0b3ff;
+      border-radius: 50%;
+      animation: typingAnimation 1.4s infinite ease-in-out;
+    }
+    
+    .typing-dot:nth-child(1) { animation-delay: 0s; }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    
+    @keyframes typingAnimation {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.6; }
+      30% { transform: translateY(-4px); opacity: 1; }
+    }
+
+    /* Code block styling */
+    .code-container {
+      position: relative;
+      margin: 8px 0;
+    }
+    
+    .code-block {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border-left: 3px solid #00ffe7;
+      position: relative;
+      padding-top: 30px;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 4px;
+      padding: 4px 8px;
+      color: #b0b3ff;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .copy-btn:active {
+      transform: scale(0.95);
+    }
+
+    .copy-btn.copied {
+      background: rgba(0, 230, 118, 0.2);
+      color: #00e676;
+    }
+
+    /* Input area */
     .input-area {
       width: 100%;
     }
@@ -217,22 +303,14 @@
       padding: 14px 20px;
       border: none;
       border-radius: 30px;
-      font-size: 14px;
+      font-size: 15px;
       outline: none;
-      background: rgba(26, 26, 46, 0.8);
+      background: #1a1a2e;
       color: #fff;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-    }
-
-    .prompt-area input:focus {
-      border-color: #4facfe;
-      box-shadow: 0 0 0 2px rgba(79, 172, 254, 0.2);
     }
 
     .prompt-area input::placeholder {
-      color: rgba(204, 204, 204, 0.7);
+      color: #ccc;
     }
 
     .prompt-area button {
@@ -245,16 +323,11 @@
       font-size: 20px;
       font-weight: bold;
       cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+      transition: transform 0.2s ease;
     }
 
     .prompt-area button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
+      transform: scale(1.1);
     }
 
     .footer-container {
@@ -300,6 +373,13 @@
         justify-content: center;
         text-align: center;
       }
+
+      .user-message,
+      .ai-message {
+        max-width: 80%;
+        margin-left: 20%;
+        margin-right: 20%;
+      }
     }
   </style>
 </head>
@@ -312,7 +392,7 @@
     
     <div class="sidebar-section">
       <h3>About This Project</h3>
-      <p>Advanced AI chatbot powered by Google's Gemini model, providing intelligent, real-time responses to user queries.</p>
+      <p>Advanced AI chatbot powered by VNA Ai model, providing intelligent, real-time responses to user queries.</p>
     </div>
     
     <div class="sidebar-section">
@@ -336,14 +416,16 @@
   
   <div class="main-content">
     <div class="title">AI Chat Assistant</div>
-    <div class="subtitle">Powered by Gemini AI Technology</div>
+    <div class="subtitle">Powered by VNA Technology</div>
 
-    <div class="chat-container"></div>
+    <div class="chat-container" id="chatContainer">
+      <!-- Messages will appear here -->
+    </div>
 
     <div class="input-area">
       <div class="prompt-area">
-        <input type="text" id="prompt" placeholder="Ask me anything..." />
-        <button id="submit">→</button>
+        <input type="text" id="prompt" placeholder="Type your message here..." />
+        <button id="submit">&#9658;</button>
       </div>
     </div>
 
@@ -358,20 +440,80 @@
   <script>
     const promptInput = document.querySelector("#prompt");
     const submitBtn = document.querySelector("#submit");
-    const chatContainer = document.querySelector(".chat-container");
+    const chatContainer = document.querySelector("#chatContainer");
 
     const Api_Url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyBJvhPW1ZSldEsWcGoNwgN4LuarfBPtnXY";
 
-    async function generateResponse(userMessage) {
-      const aiChatBox = document.createElement("div");
-      aiChatBox.classList.add("chat-box");
-
-      const aiBubble = document.createElement("div");
-      aiBubble.classList.add("chat-bubble", "ai-chat");
-      aiBubble.textContent = "Thinking...";
-      aiChatBox.appendChild(aiBubble);
-      chatContainer.appendChild(aiChatBox);
+    function showThinkingIndicator() {
+      const thinkingBox = document.createElement("div");
+      thinkingBox.className = "message ai-message";
+      thinkingBox.innerHTML = `
+        <div class="typing-indicator">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      `;
+      chatContainer.appendChild(thinkingBox);
       chatContainer.scrollTop = chatContainer.scrollHeight;
+      return thinkingBox;
+    }
+
+    function formatCodeInResponse(text) {
+      if (text.includes("```")) {
+        return text.replace(/```(\w*)([\s\S]*?)```/g, function(match, language, code) {
+          const codeId = 'code-' + Math.random().toString(36).substr(2, 9);
+          return `
+            <div class="code-container">
+              <div class="code-block" id="${codeId}">
+                ${code.trim()}
+              </div>
+              <button class="copy-btn" onclick="copyCode('${codeId}', this)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                </svg>
+                Copy
+              </button>
+            </div>
+          `;
+        });
+      }
+      return text;
+    }
+
+    function copyCode(codeId, btn) {
+      const codeBlock = document.getElementById(codeId);
+      navigator.clipboard.writeText(codeBlock.textContent)
+        .then(() => {
+          btn.classList.add('copied');
+          btn.innerHTML = `
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Copied!
+          `;
+          setTimeout(() => {
+            btn.classList.remove('copied');
+            btn.innerHTML = `
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+              </svg>
+              Copy
+            `;
+          }, 2000);
+        });
+    }
+
+    async function generateResponse(userMessage) {
+      // Create user message element
+      const userMessageBox = document.createElement("div");
+      userMessageBox.className = "message user-message";
+      userMessageBox.textContent = userMessage;
+      chatContainer.appendChild(userMessageBox);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      // Show thinking indicator
+      const thinkingBox = showThinkingIndicator();
 
       try {
         const response = await fetch(Api_Url, {
@@ -379,32 +521,24 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ contents: [{ parts: [{ text: userMessage }] }] }),
         });
+        
         const data = await response.json();
-        aiBubble.textContent =
-          data.candidates[0].content.parts[0].text.replace(/\\(.?)\\*/g, "$1").trim();
+        const responseText = data.candidates[0].content.parts[0].text.replace(/\\(.?)\\*/g, "$1").trim();
+        
+        // Replace thinking indicator with actual response
+        thinkingBox.innerHTML = formatCodeInResponse(responseText);
+        
       } catch (error) {
-        aiBubble.textContent = "Something went wrong. Please try again.";
+        thinkingBox.textContent = "Something went wrong. Please try again.";
       }
 
       chatContainer.scrollTop = chatContainer.scrollHeight;
+      promptInput.value = "";
     }
 
     function handleUserMessage() {
       const userMessage = promptInput.value.trim();
       if (!userMessage) return;
-
-      const userChatBox = document.createElement("div");
-      userChatBox.classList.add("chat-box");
-
-      const userBubble = document.createElement("div");
-      userBubble.classList.add("chat-bubble", "user-chat");
-      userBubble.textContent = userMessage;
-
-      userChatBox.appendChild(userBubble);
-      chatContainer.appendChild(userChatBox);
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-
-      promptInput.value = "";
       generateResponse(userMessage);
     }
 
@@ -413,6 +547,15 @@
     });
 
     submitBtn.addEventListener("click", handleUserMessage);
+
+    // Initial greeting
+    setTimeout(() => {
+      const greeting = document.createElement("div");
+      greeting.className = "message ai-message";
+      greeting.textContent = "Hello! I'm your AI assistant. How can I help you today?";
+      chatContainer.appendChild(greeting);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }, 500);
   </script>
 </body>
 </html>
