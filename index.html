@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AI Essentials Chatbot</title>
-  <!-- Include marked.js from CDN -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     * {
@@ -19,6 +18,7 @@
       min-height: 100vh;
       color: #e0e0e0;
       display: flex;
+      overflow-x: hidden;
     }
 
     /* Sidebar styling */
@@ -36,6 +36,23 @@
       z-index: 10;
       display: flex;
       flex-direction: column;
+    }
+
+    .sidebar-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #b0b3ff;
+      font-size: 24px;
+      cursor: pointer;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 15;
+    }
+
+    .sidebar-content {
+      display: block;
     }
 
     .logo-container {
@@ -83,7 +100,9 @@
 
     .sidebar-section h3::before {
       content: "";
-      display: inline-block;
+      display
+
+: inline-block;
       width: 6px;
       height: 6px;
       background: #4facfe;
@@ -127,6 +146,7 @@
       min-height: 100vh;
       padding: 40px 40px 20px;
       max-width: calc(100% - 280px);
+      overflow-x: hidden;
     }
 
     .title {
@@ -179,7 +199,7 @@
       align-self: flex-end;
       background: linear-gradient(135deg, #00f2fe, #4facfe);
       color: #000;
-      border-bottom-right-radius: 4px;   
+      border-bottom-right-radius: 4px;
       margin-left: 30%;
     }
 
@@ -223,7 +243,7 @@
       gap: 6px;
       padding: 8px 0;
     }
-    
+
     .typing-dot {
       width: 8px;
       height: 8px;
@@ -231,11 +251,11 @@
       border-radius: 50%;
       animation: typingAnimation 1.4s infinite ease-in-out;
     }
-    
+
     .typing-dot:nth-child(1) { animation-delay: 0s; }
     .typing-dot:nth-child(2) { animation-delay: 0.2s; }
     .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-    
+
     @keyframes typingAnimation {
       0%, 60%, 100% { transform: translateY(0); opacity: 0.6; }
       30% { transform: translateY(-4px); opacity: 1; }
@@ -246,7 +266,7 @@
       position: relative;
       margin: 8px 0;
     }
-    
+
     .code-block {
       background: rgba(0, 0, 0, 0.3);
       border-radius: 8px;
@@ -357,83 +377,196 @@
     /* Mobile responsiveness */
     @media (max-width: 900px) {
       .sidebar {
-        width: 100%;
-        height: auto;
-        position: static;
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        width: 250px;
+        position: fixed;
+        left: -250px;
+        transition: left 0.3s ease;
+        z-index: 100;
+        height: 100vh;
+        overflow-y: auto;
+        overflow-x: hidden;
       }
-      
+
+      .sidebar.open {
+        left: 0;
+      }
+
+      .sidebar-toggle {
+        display: block;
+      }
+
       .main-content {
         margin-left: 0;
         max-width: 100%;
-        padding: 25px 20px;
+        padding: 15px;
+        transition: margin-left 0.3s ease;
       }
-      
+
+      .sidebar.open ~ .main-content {
+        margin-left: 250px;
+      }
+
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 99;
+      }
+
+      .sidebar.open ~ .sidebar-overlay {
+        display: block;
+      }
+
       .chat-container {
-        max-height: 55vh;
-      }
-      
-      .logo-container {
-        justify-content: center;
-        text-align: center;
+        max-height: 70vh;
+        min-height: 300px;
+        padding: 15px;
       }
 
       .user-message,
       .ai-message {
-        max-width: 80%;
-        margin-left: 20%;
-        margin-right: 20%;
+        max-width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
+        padding: 10px 14px;
+      }
+
+      .prompt-area {
+        gap: 8px;
+      }
+
+      .prompt-area input {
+        padding: 12px 15px;
+        font-size: 14px;
+      }
+
+      .prompt-area button {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+      }
+
+      .sidebar-section h3 {
+        font-size: 14px;
+      }
+
+      .sidebar-section p,
+      .sidebar-features li {
+        font-size: 12px;
+      }
+
+      .title {
+        font-size: 28px;
+      }
+
+      .subtitle {
+        font-size: 13px;
+      }
+
+      .footer {
+        font-size: 11px;
+      }
+
+      .registration {
+        font-size: 10px;
+      }
+
+      .copy-btn {
+        padding: 6px 10px;
+        font-size: 10px;
+      }
+
+      .copy-btn svg {
+        width: 10px;
+        height: 10px;
+      }
+
+      .logo-container {
+        justify-content: flex-start;
+        text-align: left;
+      }
+
+      .logo-text {
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .sidebar {
+        width: 200px;
+        left: -200px;
+      }
+
+      .sidebar.open ~ .main-content {
+        margin-left: 200px;
+      }
+
+      .chat-container {
+        padding: 10px;
+      }
+
+      .prompt-area input {
+        font-size: 13px;
+        padding: 10px 12px;
+      }
+
+      .prompt-area button {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+      }
+
+      .message {
+        font-size: 13px;
       }
     }
   </style>
 </head>
 <body>
   <div class="sidebar">
-    <div class="logo-container">
-      <div class="logo"></div>
-      <div class="logo-text">VNA </div>
-    </div>
-    
-    <div class="sidebar-section">
-      <h3>About This Project</h3>
-      <p>Advanced AI Educational Chatbot powered by VNA Ai model, providing intelligent, real-time responses to user queries.</p>
-    </div>
-    
-    <div class="sidebar-section">
-      <h3>Key Features</h3>
-      <ul class="sidebar-features">
-        <li>Natural language processing</li>
-        <li>Context-aware responses</li>
-        <li>Secure encrypted communication</li>
-        <li>Responsive cross-platform design</li>
-        <li>Modern conversational UI</li>
-      </ul>
-    </div>
-    
-    <div class="sidebar-section">
-      <h3>Development Team</h3>
-      <p><strong>Vishnu</strong> - AI Integration</p>
-      <p><strong>Nandha</strong> - Backend Development</p>
-      <p><strong>Athar</strong> - UI/UX Design</p>
+    <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+    <div class="sidebar-content">
+      <div class="logo-container">
+        <div class="logo"></div>
+        <div class="logo-text">VNA</div>
+      </div>
+      <div class="sidebar-section">
+        <h3>About This Project</h3>
+        <p>Advanced AI Educational Chatbot powered by VNA Ai model, providing intelligent, real-time responses to user queries.</p>
+      </div>
+      <div class="sidebar-section">
+        <h3>Key Features</h3>
+        <ul class="sidebar-features">
+          <li>Natural language processing</li>
+          <li>Context-aware responses</li>
+          <li>Secure encrypted communication</li>
+          <li>Responsive cross-platform design</li>
+          <li>Modern conversational UI</li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <h3>Development Team</h3>
+        <p><strong>Vishnu</strong> - AI Integration</p>
+        <p><strong>Nandha</strong> - Backend Development</p>
+        <p><strong>Athar</strong> - UI/UX Design</p>
+      </div>
     </div>
   </div>
-  
+
   <div class="main-content">
-    <div class="title">EduBuddy </div>
+    <div class="title">EduBuddy</div>
     <div class="subtitle">Powered by VNA Technology</div>
-
-    <div class="chat-container" id="chatContainer">
-      <!-- Messages will appear here -->
-    </div>
-
+    <div class="chat-container" id="chatContainer"></div>
     <div class="input-area">
       <div class="prompt-area">
         <input type="text" id="prompt" placeholder="Type your message here..." />
         <button id="submit">►</button>
       </div>
     </div>
-
     <div class="footer-container">
       <div class="footer">© 2025 VNA AI Technologies</div>
       <div class="registration">
@@ -446,6 +579,21 @@
     const promptInput = document.querySelector("#prompt");
     const submitBtn = document.querySelector("#submit");
     const chatContainer = document.querySelector("#chatContainer");
+    const sidebarToggle = document.querySelector("#sidebarToggle");
+    const sidebar = document.querySelector(".sidebar");
+    const mainContent = document.querySelector(".main-content");
+
+    const overlay = document.createElement("div");
+    overlay.className = "sidebar-overlay";
+    document.body.appendChild(overlay);
+
+    sidebarToggle.addEventListener("click", () => {
+      sidebar.classList.toggle("open");
+    });
+
+    overlay.addEventListener("click", () => {
+      sidebar.classList.remove("open");
+    });
 
     const Api_Url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyBJvhPW1ZSldEsWcGoNwgN4LuarfBPtnXY";
 
@@ -465,10 +613,7 @@
     }
 
     function formatCodeInResponse(text) {
-      // Parse Markdown to HTML using marked.js
       let parsedText = marked.parse(text);
-
-      // Handle code blocks separately to maintain custom styling
       if (text.includes("```")) {
         parsedText = parsedText.replace(/<pre><code class="language-(\w*)">([\s\S]*?)<\/code><\/pre>/g, function(match, language, code) {
           const codeId = 'code-' + Math.random().toString(36).substr(2, 9);
@@ -487,7 +632,6 @@
           `;
         });
       }
-
       return parsedText;
     }
 
@@ -515,33 +659,25 @@
     }
 
     async function generateResponse(userMessage) {
-      // Create user message element
       const userMessageBox = document.createElement("div");
       userMessageBox.className = "message user-message";
       userMessageBox.textContent = userMessage;
       chatContainer.appendChild(userMessageBox);
       chatContainer.scrollTop = chatContainer.scrollHeight;
 
-      // Show thinking indicator
       const thinkingBox = showThinkingIndicator();
-
       try {
         const response = await fetch(Api_Url, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ contents: [{ parts: [{ text: userMessage }] }] }),
         });
-        
         const data = await response.json();
         const responseText = data.candidates[0].content.parts[0].text.replace(/\\(.?)\\*/g, "$1").trim();
-        
-        // Replace thinking indicator with parsed Markdown response
         thinkingBox.innerHTML = formatCodeInResponse(responseText);
-        
       } catch (error) {
         thinkingBox.textContent = "Something went wrong. Please try again.";
       }
-
       chatContainer.scrollTop = chatContainer.scrollHeight;
       promptInput.value = "";
     }
@@ -559,7 +695,6 @@
 
     submitBtn.addEventListener("click", handleUserMessage);
 
-    // Initial greeting
     setTimeout(() => {
       const greeting = document.createElement("div");
       greeting.className = "message ai-message";
